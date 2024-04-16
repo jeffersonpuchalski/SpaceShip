@@ -1,0 +1,33 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "SqlServer2019!"
+      ACCEPT_EULA: "Y"
+      DB_NAME: "Nasa"
+      MSSQL_PID: "Developer"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P SqlServer2019! -Q 'SELECT 1' || exit 1"]
+      interval: 5s
+      retries: 10
+      start_period: 5s
+      timeout: 3s
+    ports:
+      - "1433:1433"
+  # mssqltools:
+  #   image: mcr.microsoft.com/mssql-tools
+  #   depends_on:
+  #     sqlserver:
+  #       condition: service_healthy
+  #   environment:
+  #     SA_PASSWORD: "SqlServer2019!"
+  #     ACCEPT_EULA: "Y"
+  #     DB_NAME: "master"
+  #     MSSQL_PID: "Developer"
+  #   volumes:
+  #     - ./users/user.sql:/tmp/user.sql
+  #     - ./database/database.sql:/tmp/database.sql
+  #     - ./schema/schema.sql:/tmp/schema.sql
+  #     - ./tables/table.sql:/tmp/table.sql
+  #     - ./init.sh:/tmp/init.sh
+  #   command: /bin/bash ./tmp/init.sh
