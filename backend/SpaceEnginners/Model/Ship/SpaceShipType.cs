@@ -5,7 +5,7 @@ namespace SpaceEnginners.Model.SpaceShips
 {
     public class SpaceShipType
     {
-        [Key]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SpaceShipTypeId { get; set; }
 
         public required string SpaceShipTypeName { get; set; }

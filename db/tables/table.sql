@@ -81,6 +81,11 @@ CREATE TABLE SpaceShips
     CONSTRAINT FK_SpaceShips_SpaceShipTypeId FOREIGN KEY (SpaceShipTypeId) REFERENCES SpaceShipTypes(SpaceShipTypeId)
 );
 
+-- Create the index for SpaceShips table
+CREATE CLUSTERED INDEX IX_SpaceShips_SpaceShipId ON SpaceShips(SpaceShipId);
+GO
+
+
 -- Path: db/table.sql
 -- Create a new table called 'SpaceShipTypes' in schema 'SchemaName'
 -- Drop the table if it already exists

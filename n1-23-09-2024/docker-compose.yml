@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    build: .    
+    container_name: sqlserver-ecommerce-container
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "YourStrong!Passw0rd"
+    volumes:
+      - ./script.sql:/usr/src/app/script.sql
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge

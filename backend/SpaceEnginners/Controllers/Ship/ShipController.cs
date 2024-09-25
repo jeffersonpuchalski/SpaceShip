@@ -34,22 +34,20 @@ namespace SpaceEnginners.Repository
 
         public async Task<List<SpaceShips>> GetAll()
         {
-            return await _spaceShips.Join(
-                _context.SpaceShipTypes,
-                ship => ship.SpaceShipTypeId,
-                type => type.SpaceShipTypeId,
-                (ship, type) => new SpaceShips
-                {
-                    SpaceShipName = ship.SpaceShipName,
-                    SpaceShipModel = ship.SpaceShipModel,
-                    SpaceShipYear = ship.SpaceShipYear,
-                    SpaceShipTypes = new SpaceShipType
-                    {                 
-                        SpaceShipTypeName = type.SpaceShipTypeName,
-                        SpaceShipTypeDescription = type.SpaceShipTypeDescription
-                    }
-                }
-            ).ToListAsync();
+            var item = (from _spaceShips in _context.SpaceShips
+                        join _spaceShipTypes in _context.SpaceShipTypes on _spaceShips.SpaceShipTypeId equals _spaceShipTypes.SpaceShipTypeId
+                        select new SpaceShips
+                        {
+                            SpaceShipName = _spaceShips.SpaceShipName,
+                            SpaceShipModel = _spaceShips.SpaceShipModel,
+                            SpaceShipYear = _spaceShips.SpaceShipYear,
+                            SpaceShipTypes = new SpaceShipType
+                            {
+                                SpaceShipTypeName = _spaceShipTypes.SpaceShipTypeName,
+                                SpaceShipTypeDescription = _spaceShipTypes.SpaceShipTypeDescription
+                            }
+                        }).ToList();
+            return item;
         }
 
         public async Task Save(SpaceShips ship)

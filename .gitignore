@@ -490,3 +490,7 @@ mono_crash.*
 # Visual Studio Code
 .vscode
 backend/SpaceEnginners/SpaceEnginners.http
+
+#Binary files 
+.output/
+.*out/
